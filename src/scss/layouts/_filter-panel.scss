@@ -1,0 +1,29 @@
+.filterPanel {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 5px 15px;
+  //grid-gap: 10px;
+
+  &__item {
+    padding: 5px 40px;
+    cursor: pointer;
+
+    transition: .2s;
+
+    &:hover {
+      color: $primary-blue;
+    }
+
+    &.active {
+      color: $primary-blue;
+      border-bottom: 5px solid $primary-blue;
+
+      &:hover {
+        box-shadow: none;
+      }
+    }
+  }
+}

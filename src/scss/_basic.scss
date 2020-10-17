@@ -1,0 +1,50 @@
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $body-bgc;
+  font-family: 'Roboto', sans-serif;
+}
+
+input,
+input:focus {
+  outline: none;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+
+  &:hover {
+    color: #313445;
+  }
+}
+
+.container {
+  width: $container-width-lg;
+  margin: 0 auto;
+}
+
+.center-all {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mt-sm {
+  margin-top: 10px;
+}
+
+.mt-md {
+  margin-top: 20px;
+}
+
+.mt-lg {
+  margin-top: 40px;
+}
