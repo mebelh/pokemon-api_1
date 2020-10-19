@@ -26,6 +26,13 @@ a {
   }
 }
 
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .container {
   width: $container-width-lg;
   margin: 0 auto;
@@ -35,6 +42,11 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.center-row {
+  display: flex;
+  justify-content: center;
 }
 
 .mt-sm {
@@ -48,3 +60,16 @@ a {
 .mt-lg {
   margin-top: 40px;
 }
+
+.mb-sm {
+  margin-bottom: 10px;
+}
+
+.mb-md {
+  margin-bottom: 20px;
+}
+
+.mb-lg {
+  margin-bottom: 40px;
+}
+

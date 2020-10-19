@@ -1,15 +1,14 @@
-import React, {useState} from "react"
-import MaterialIcon from "material-icons-react";
-import useHttp from "../hooks/http.hook";
+import React from "react"
+import {useDispatch} from "react-redux"
+import {addBookmark, deleteBookmark} from "../Redux/actions";
+import {capitalize} from "../utils/capitalize";
 
-export default function Card({title = '', url = '', favorite = false}) {
-   const {request} = useHttp()
-   const [pokemonData, setPokemonData] = useState({})
-   request(url).then(data => {
-      setPokemonData({
-         imgUrl: data['sprites']['back_default']
-      })
-   })
+export default function Card({name = '', imgUrl = '', id, favorite}) {
+   const dispatch = useDispatch()
+   const toggleBookmarkHandler = () => {
+      dispatch(favorite ? deleteBookmark(id) : addBookmark(id, {name, id, imgUrl}))
+   }
+   const color = favorite ? 'tomato' : 'black'
    return (
       <div className='card'>
          <div style={{
@@ -18,10 +17,20 @@ export default function Card({title = '', url = '', favorite = false}) {
             justifyContent: 'center',
             alignItems: 'center'
          }}>
-            {title}
-            <img src={pokemonData.imgUrl} />
+            {capitalize(name)}
+            <img src={imgUrl}/>
          </div>
-         <MaterialIcon icon='bookmark' color={favorite ? 'tomato' : 'black'}/>
+         <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+         }}>
+            <span onClick={toggleBookmarkHandler}>
+               <i className='material-icons md-24 md-dark' style={{color: color}}>bookmark</i>
+            </span>
+            <span style={{marginTop: '30px'}}>pokemon Id: {id}</span>
+         </div>
       </div>
    )
 }

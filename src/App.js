@@ -1,42 +1,39 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 
 import './scss/index.scss'
 import SearchPanel from "./components/SearchPanel";
 import FilterPanel from "./components/FilterPanel";
-import Card from "./components/Card";
-import useHttp from "./hooks/http.hook";
+import Cards from "./components/Cards";
+import {connect, useDispatch} from "react-redux";
+import {fetchCards} from "./Redux/actions";
+import Loading from "./components/Loading";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
+import Bookmarks from "./components/Bookmarks";
 
-function App() {
-   const [data, setData] = useState(null)
-   const {request} = useHttp()
+function App({loading}) {
+   const dispatch = useDispatch()
    useEffect(() => {
-      request('https://pokeapi.co/api/v2/pokemon?limit=4&offset=1').then(d => {
-         const pokemons = d['results'].map(({name, url}) => {
-            request(url).then()
-            return {
-               name,
-               url
-            }
-         })
-         setData(pokemons)
-      })
+      dispatch(fetchCards())
    }, [])
-
-   const cards = data && data.map(({name, url}) => {
-      return <Card title={name} url={url} />
-   })
-   console.log(data)
-
    return (
       <div className="App container">
          <SearchPanel/>
-         <FilterPanel/>
-         {cards}
-         <div className='center-all mt-sm'>
-            <button className='btn'>Загрузить еще...</button>
-         </div>
+         <BrowserRouter>
+            <FilterPanel/>
+            <Switch>
+               <Route component={Cards} path='/' exact={true}/>
+               <Route component={Bookmarks} path='/bookmarks' />
+            </Switch>
+         </BrowserRouter>
+         {loading && <Loading />}
       </div>
    )
 }
 
-export default App;
+const mapStateToProps = ({cards, loading}) => ({
+   cards: cards.cards,
+   loading: loading.loading
+})
+
+
+export default connect(mapStateToProps, null)(App)
